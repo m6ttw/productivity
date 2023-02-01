@@ -17,3 +17,8 @@ export const getUser = (req, res) => {
   const singleUser = users.filter((user) => user.id === req.params.id);
   res.send(singleUser);
 }
+
+export const deleteUser = (req, res) => {
+  users = users.filter((user) => user.id !== req.params.id);
+  res.send('User deleted successfully');
+}
