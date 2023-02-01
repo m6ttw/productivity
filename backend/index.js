@@ -12,16 +12,19 @@ app.use(cors());
 
 app.use('/', userRoutes);
 
+
 app.get('/', async(req, res) => {
+
   try {
-    res.send('Hello from Express!');
+    res.send('Hi!');
   } catch (error) {
     console.error(`Error: ${error}`);
   }
+
 })
+
 
 app.all('*', (req, res) => res.send('This route does not exist'));
 
-app.listen(port, () => {
-  console.log(`Server listening on port: http://localhost:${port}`);
-})
+
+app.listen(port, () => console.log(`Server listening on port: http://localhost:${port}`));
