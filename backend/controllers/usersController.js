@@ -1,13 +1,16 @@
 import pool from '../dbfiles/dbConfig.js';
 
+
+// Retrieve all users
 export const getUsers = async () => {
 
   const [rows] = await pool.query('SELECT * FROM user_details');
+
   return rows;
 
 }
 
-
+// Retrieve a single user by ID
 export const getUser = async (user_id) => {
 
   const [rows] = await pool.query(`
@@ -16,11 +19,11 @@ export const getUser = async (user_id) => {
     WHERE user_id = ?
   `, [user_id]);
 
-  return rows[0]; // to get just 1 object, not an array with 1 object
+  return rows[0];
 
 }
 
-
+// Create a new user
 export const createUser = async (username, password, firstname, lastname, age, email) => {
   
   const [result] = await pool.query(`
@@ -29,11 +32,12 @@ export const createUser = async (username, password, firstname, lastname, age, e
   `, [username, password, firstname, lastname, age, email]);
 
   const id = result.insertId;
+
   return getUser(id);
-  
+
 }
 
-
+// Update a user by ID
 export const updateUser = (req, res) => {
 
   const user = users.find((user) => user.id === req.params.id);
@@ -45,7 +49,7 @@ export const updateUser = (req, res) => {
 
 }
 
-
+// Delete a user by ID
 export const deleteUser = (req, res) => {
 
   users = users.filter((user) => user.id !== req.params.id);
@@ -55,5 +59,5 @@ export const deleteUser = (req, res) => {
 }
 
 
-const banana = await getUsers();
-console.log(banana);
+// const banana = await getUsers();
+// console.log(banana);
