@@ -18,19 +18,32 @@ import { createUser, getUsers, getUser, deleteUser, updateUser } from './control
 
 app.get('/users', async (req, res) => {
   const users = await getUsers();
-  res.send(users);
+  res.status(200).send(users);
 })
 
 app.get('/users/:id', async (req, res) => {
   const id = req.params.id;
   const user = await getUser(id);
-  res.send(user);
+  res.status(200).send(user);
 })
 
 app.post('/users', async (req, res) => {
   const { username, password, email } = req.body;
   const user = await createUser(username, password, email);
   res.status(201).send(user);
+})
+
+app.put('/users/:id', async (req, res) => {
+  const id = req.params.id;
+  const { username, password, email, } = req.body;
+  const user = await updateUser(username, password, email, id);
+  res.status(200).send(user);
+})
+
+app.delete('/users/:id', async (req, res) => {
+  const id = req.params.id;
+  const user = await deleteUser(id);
+  res.status(200).send(user);
 })
 
 

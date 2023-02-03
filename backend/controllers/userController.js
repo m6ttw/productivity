@@ -37,40 +37,29 @@ export const createUser = async (username, password, email) => {
 }
 
 // Update a user by ID
-export const updateUser = (req, res) => {
+export const updateUser = async (username, password, email, id) => {
+  
+  const [result] = await pool.query(`
+    UPDATE users
+    SET username = ?, password = ?, email = ?
+    WHERE id = ?
+  `, [username, password, email, id]);
 
-  const user = users.find((user) => user.id === req.params.id);
+  const user_id = result.insertId;
 
-  user.username = req.body.username;
-  user.password = req.body.password;
-  user.email = req.body.email;
-
-  res.send('User updated successfully');
+  return getUser(user_id);
 
 }
-/*
+
 // Delete a user by ID
-export const deleteUser = (req, res) => {
-
-  users = users.filter((user) => user.id !== req.params.id);
-
-  res.send('User deleted successfully');
-
-}
-*/
-
-export const deleteUser = async (user_id) => {
+export const deleteUser = async (id) => {
 
   const rows = await pool.query(`
     DELETE
-    FROM user_details
-    WHERE user_id = ?
-  `, [user_id]);
+    FROM users
+    WHERE id = ?
+  `, [id]);
 
-  return rows;
+  return getUsers();
 
 }
-
-
-// const banana = await getUsers();
-// console.log(banana);
