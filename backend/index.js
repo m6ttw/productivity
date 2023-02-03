@@ -8,31 +8,33 @@ const port = 5000;
 app.use(bodyParser.json());
 app.use(cors());
 
-// import router from './routes/userRoute.js';
-// app.use('', router);
-
 import { createUser, getUsers, getUser, deleteUser, updateUser } from './controllers/userController.js';
 
 
-            /* REQUESTS */
+/* REQUESTS */
 
+
+// Get all
 app.get('/users', async (req, res) => {
   const users = await getUsers();
   res.status(200).send(users);
 })
 
+// Get one
 app.get('/users/:id', async (req, res) => {
   const id = req.params.id;
   const user = await getUser(id);
   res.status(200).send(user);
 })
 
+// Create
 app.post('/users', async (req, res) => {
   const { username, password, email } = req.body;
   const user = await createUser(username, password, email);
   res.status(201).send(user);
 })
 
+// Update
 app.put('/users/:id', async (req, res) => {
   const id = req.params.id;
   const { username, password, email, } = req.body;
@@ -40,6 +42,7 @@ app.put('/users/:id', async (req, res) => {
   res.status(200).send(user);
 })
 
+// Delete
 app.delete('/users/:id', async (req, res) => {
   const id = req.params.id;
   const user = await deleteUser(id);
@@ -47,7 +50,7 @@ app.delete('/users/:id', async (req, res) => {
 })
 
 
-// Other
+/*  Other, error handling etc  */
 
 app.get('/', async (req, res) => {
   try {
@@ -59,7 +62,7 @@ app.get('/', async (req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
-  res.status(500).send('Something broke!')
+  res.status(500).send('Internal server error!')
 })
 
 app.all('*', (req, res) => res.send('This route does not exist'));
