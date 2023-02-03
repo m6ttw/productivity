@@ -1,6 +1,5 @@
 import pool from '../dbfiles/dbConfig.js';
 
-
 // Retrieve all users
 export const getUsers = async () => {
 
