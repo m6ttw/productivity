@@ -1,4 +1,4 @@
-import pool from '../dbfiles/dbConfig.js';
+import pool from '../config/pool.js';
 
 // Retrieve all users
 export const getUsers = async () => {
