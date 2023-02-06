@@ -7,6 +7,6 @@ router.get('/', async (req, res) => {
   } catch (error) {
     console.error(`Error: ${error}`);
   }
-})
+});
 
 export default router;
